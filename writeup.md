@@ -25,12 +25,12 @@ The goals / steps of this project are the following:
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.
 
 ---
 ### Writeup / README
 
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
+#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.
 
 You're reading it!
 
@@ -38,18 +38,18 @@ You're reading it!
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
-![alt text][image1]
+<img src="./examples/car_not_car.png">
 
-I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I picked up an image of car and test it with `skimage.hog()`. I also tuned the parameters for the better results. 
+I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I picked up an image of car and test it with `skimage.hog()`. I also tuned the parameters for the better results.
 
 Here is an example using the `RGB` color space and HOG parameters of `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
 
-![alt text][image2]
+<img src="./examples/HOG_example.png">
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
@@ -65,9 +65,9 @@ I trained a linear SVM using `sklearn.svm.LinearSVC()`. Before I started trainin
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
- I using the sliding window algorithm that was implemented in the same way to one presented in Udacity's lectures. It uses a fixed size window to iterate the whole ROI(usually the half buttom of the image) to detect if the fixed region contains a car. 
+I using the sliding window algorithm that was implemented in the same way to one presented in Udacity's lectures. It uses a fixed size window to iterate the whole ROI(usually the half buttom of the image) to detect if the fixed region contains a car.
 
-![alt text][image3]
+<img src="./examples/sliding_windows.png">
 
 But the first version of the algorithm is far from satisfaction.
 
@@ -75,7 +75,7 @@ But the first version of the algorithm is far from satisfaction.
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text][image4]<img src="./examples/sliding_window2.png">
+<img src="./examples/sliding_window.png"> <img src="./examples/sliding_window2.png">
 ---
 
 
@@ -88,20 +88,19 @@ Here's a [link to my video result](https://github.com/Meirtz/CarND-Vehicle-Detec
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
 ### Here are six frames and their corresponding heatmaps:
 
-![alt text][image5]
+<img src="./examples/bboxes_and_heat.png">
 
 
 
 ### After all, I combine my result of P4:Advance finding lane line. Here the resulting bounding boxes are drawn onto the last frame in the series with other metadata:
-![alt text][image7]
 
-
+<img src="./examples/output_bboxes.png">
 
 ---
 
